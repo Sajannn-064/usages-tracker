@@ -1,43 +1,47 @@
-// background.js - Service worker for persistent storage
+// background.js
+
+let totalInput = 0;
+let totalOutput = 0;
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'RATE_LIMIT_UPDATE') {
-    // Store in chrome.storage for persistence across tabs
-    chrome.storage.local.set({
-      'claude-usage': {
-        ...request.payload,
-        last_update: new Date().toISOString()
-      }
-    });
+    
+    // Accumulate totals
+    totalInput += (request.payload.input_tokens || 0);
+    totalOutput += (request.payload.output_tokens || 0);
 
-    // Broadcast to all tabs
-    chrome.tabs.query({}, (tabs) => {
-      tabs.forEach(tab => {
-        chrome.tabs.sendMessage(tab.id, {
-          type: 'USAGE_UPDATE',
-          data: request.payload
-        }).catch(() => {
-          // Tab might not have listener
+    const data = {
+      ...request.payload,
+      total_tokens: totalInput + totalOutput,
+      total_input: totalInput,
+      total_output: totalOutput,
+      last_update: new Date().toISOString()
+    };
+
+    chrome.storage.local.set({ 'claude-usage': data }, () => {
+      // Broadcast to popup
+      chrome.tabs.query({ url: 'https://claude.ai/*' }, (tabs) => {
+        tabs.forEach(tab => {
+          chrome.tabs.sendMessage(tab.id, {
+            type: 'USAGE_UPDATE',
+            data: data
+          }).catch(() => {});
         });
       });
+      sendResponse({ success: true });
     });
 
-    sendResponse({ success: true });
+    return true;
   }
 });
 
-// Initialize storage on install
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.set({
-    'claude-usage': {
-      rpm_used: 0,
-      rpm_limit: null,
-      itpm_used: 0,
-      itpm_limit: null,
-      otpm_used: 0,
-      otpm_limit: null,
-      reset_time: null,
-      last_update: null
-    }
-  });
+  chrome.storage.local.set({ 'claude-usage': {
+    message_count: 0,
+    input_tokens: 0,
+    output_tokens: 0,
+    total_tokens: 0,
+    last_update: null
+  }});
+  console.log('Claude Usage Tracker installed!');
 });

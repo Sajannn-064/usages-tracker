@@ -1,69 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Claude Usage Tracker</title>
-  <link rel="stylesheet" href="popup-styles.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, sans-serif; background: #0f0f0f; color: #e5e5e5; width: 260px; padding: 16px; }
+    h2 { font-size: 14px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+    .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 16px; margin-bottom: 10px; }
+    .label { font-size: 11px; color: #555; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
+    .value { font-size: 32px; font-weight: 700; color: #fff; }
+    .sub { font-size: 12px; color: #444; margin-top: 4px; }
+    .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #22c55e; margin-right: 6px; animation: p 2s infinite; }
+    @keyframes p { 0%,100%{opacity:1}50%{opacity:.3} }
+    .footer { font-size: 11px; color: #333; text-align: center; margin-top: 8px; }
+  </style>
 </head>
 <body>
-  <div class="popup-container">
-    <h2>Claude API Usage</h2>
-    
-    <div class="usage-section">
-      <h3>Rate Limits</h3>
-      
-      <div class="metric-card">
-        <div class="metric-label">Requests/Min (RPM)</div>
-        <div class="progress-bar">
-          <div class="progress-fill rpm-fill"></div>
-        </div>
-        <div class="metric-stats">
-          <span class="value rpm-value">0</span>
-          <span class="separator">/</span>
-          <span class="limit rpm-limit">--</span>
-        </div>
-        <div class="metric-bar rpm-bar"></div>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-label">Input Tokens/Min (ITPM)</div>
-        <div class="progress-bar">
-          <div class="progress-fill itpm-fill"></div>
-        </div>
-        <div class="metric-stats">
-          <span class="value itpm-value">0</span>
-          <span class="separator">/</span>
-          <span class="limit itpm-limit">--</span>
-        </div>
-        <div class="metric-bar itpm-bar"></div>
-      </div>
-
-      <div class="metric-card">
-        <div class="metric-label">Output Tokens/Min (OTPM)</div>
-        <div class="progress-bar">
-          <div class="progress-fill otpm-fill"></div>
-        </div>
-        <div class="metric-stats">
-          <span class="value otpm-value">0</span>
-          <span class="separator">/</span>
-          <span class="limit otpm-limit">--</span>
-        </div>
-        <div class="metric-bar otpm-bar"></div>
-      </div>
-    </div>
-
-    <div class="info-section">
-      <p class="reset-info">Resets: <span class="reset-time">--:--:--</span></p>
-      <p class="last-update">Last update: <span class="last-update-time">never</span></p>
-    </div>
-
-    <div class="key-info">
-      <p><strong>ℹ️ Note:</strong> RPM, ITPM, and OTPM are <strong>independent limits</strong>.</p>
-      <p>You can hit one while others have headroom.</p>
-    </div>
+  <h2><span class="dot"></span>Claude Tracker</h2>
+  <div class="card">
+    <div class="label">Messages Sent</div>
+    <div class="value" id="msgs">0</div>
+    <div class="sub">This session</div>
   </div>
-
+  <div class="card">
+    <div class="label">Session Time</div>
+    <div class="value" id="time">0m</div>
+    <div class="sub">Since page loaded</div>
+  </div>
+  <div class="footer">Resets when you refresh the page</div>
   <script src="popup.js"></script>
 </body>
 </html>

@@ -4,13 +4,9 @@
   "version": "1.0.0",
   "description": "Real-time Claude API rate limit and usage tracker",
   "permissions": [
-    "webRequest",
-    "tabs",
-    "storage",
-    "scripting"
+    "storage"
   ],
   "host_permissions": [
-    "https://api.anthropic.com/*",
     "https://claude.ai/*"
   ],
   "background": {
@@ -20,7 +16,7 @@
     {
       "matches": ["https://claude.ai/*"],
       "js": ["content.js"],
-      "css": ["styles.css"]
+      "run_at": "document_start"
     }
   ],
   "action": {
