@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Usage Tracker</title>
+  <link rel="stylesheet" href="popup-styles.css">
+</head>
+<body>
+  <div class="popup-container">
+    <h2>Claude API Usage</h2>
+    
+    <div class="usage-section">
+      <h3>Rate Limits</h3>
+      
+      <div class="metric-card">
+        <div class="metric-label">Requests/Min (RPM)</div>
+        <div class="progress-bar">
+          <div class="progress-fill rpm-fill"></div>
+        </div>
+        <div class="metric-stats">
+          <span class="value rpm-value">0</span>
+          <span class="separator">/</span>
+          <span class="limit rpm-limit">--</span>
+        </div>
+        <div class="metric-bar rpm-bar"></div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-label">Input Tokens/Min (ITPM)</div>
+        <div class="progress-bar">
+          <div class="progress-fill itpm-fill"></div>
+        </div>
+        <div class="metric-stats">
+          <span class="value itpm-value">0</span>
+          <span class="separator">/</span>
+          <span class="limit itpm-limit">--</span>
+        </div>
+        <div class="metric-bar itpm-bar"></div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-label">Output Tokens/Min (OTPM)</div>
+        <div class="progress-bar">
+          <div class="progress-fill otpm-fill"></div>
+        </div>
+        <div class="metric-stats">
+          <span class="value otpm-value">0</span>
+          <span class="separator">/</span>
+          <span class="limit otpm-limit">--</span>
+        </div>
+        <div class="metric-bar otpm-bar"></div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <p class="reset-info">Resets: <span class="reset-time">--:--:--</span></p>
+      <p class="last-update">Last update: <span class="last-update-time">never</span></p>
+    </div>
+
+    <div class="key-info">
+      <p><strong>ℹ️ Note:</strong> RPM, ITPM, and OTPM are <strong>independent limits</strong>.</p>
+      <p>You can hit one while others have headroom.</p>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "Claude Usage Tracker",
+  "version": "1.0.0",
+  "description": "Real-time Claude API rate limit and usage tracker",
+  "permissions": [
+    "webRequest",
+    "tabs",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://api.anthropic.com/*",
+    "https://claude.ai/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://claude.ai/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Claude Usage Tracker"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["https://claude.ai/*"]
+    }
+  ]
+}
