@@ -135,31 +135,7 @@ The API response includes headers that show you the rate limit enforced, current
 
 ---
 
-## Code Notes for BidWave
-
-Since you're using this for BidWave research:
-
-**In your React components**, you can access usage data:
-```javascript
-// From your component
-chrome.storage.local.get('claude-usage', (result) => {
-  const usage = result['claude-usage'];
-  console.log(`Using ${usage.itpm_used} / ${usage.itpm_limit} ITPM`);
-});
-```
-
-**If you want to add this to your BidWave dashboard**, extract the popup component logic and integrate it as a React component.
-
 ---
 
-## License & Notes
-
-This extension is for personal use with Claude.ai. 
-
-**Important:** This extension does NOT:
-- Send data to external servers
-- Log your conversations
-- Modify API responses
-- Require any authentication beyond your Claude.ai login
-
-All data stays in your browser's local storage.
+only for claude.ai
+Documentation by Claude.ai
